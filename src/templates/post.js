@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react"
 
-export default ({pageContext}) => (
+export default ({ pageContext }) => (
   <div>
     <h1>{pageContext.title}</h1>
   </div>
