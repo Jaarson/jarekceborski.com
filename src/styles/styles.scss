@@ -200,7 +200,7 @@ a.blog-link::after {
   display: inline-block;
   height: 1.6rem;
   width: 1.6rem;
-  background-image: url(../assets/icons/link-arrow-black.svg);
+  background-image: url(/assets/icons/link-arrow-black.svg);
   background-repeat: no-repeat;
   vertical-align: middle;
   margin-left: 0.5rem;
@@ -408,7 +408,7 @@ a.ic-social {
   display: inline-block;
   height: 1.6rem;
   width: 2.6rem;
-  background-image: url(../assets/icons/ic-arrow-left.svg);
+  background-image: url(/assets/icons/ic-arrow-left.svg);
   background-repeat: no-repeat;
   vertical-align: middle;
   padding-right: 1rem;
@@ -419,7 +419,7 @@ a.ic-social {
   display: inline-block;
   height: 1.6rem;
   width: 1.6rem;
-  background-image: url(../assets/icons/share-facebook.svg);
+  background-image: url(/assets/icons/share-facebook.svg);
   background-repeat: no-repeat;
   vertical-align: middle;
   padding-right: 1.5rem;
@@ -431,7 +431,7 @@ a.ic-social {
   display: inline-block;
   height: 1.6rem;
   width: 1.6rem;
-  background-image: url(../assets/icons/share-link.svg);
+  background-image: url(/assets/icons/share-link.svg);
   background-repeat: no-repeat;
   vertical-align: middle;
   padding-right: 1.5rem;
@@ -443,7 +443,7 @@ a.ic-social {
   display: inline-block;
   height: 1.6rem;
   width: 1.6rem;
-  background-image: url(../assets/icons/share-twitter.svg);
+  background-image: url(/assets/icons/share-twitter.svg);
   background-repeat: no-repeat;
   vertical-align: middle;
   padding-right: 1.5rem;
@@ -476,9 +476,7 @@ a.ic-social {
   clip-path: circle(3.5rem at center);
   display: block;
   margin-bottom: 2rem;
-  /* TODO: put path in index.js
-  background-image: url("../assets/images/DSC00202.jpg");
-  */
+  background-image: url("/assets/images/DSC00202.jpg");
   background-size: cover;
 }
 

@@ -21,9 +21,9 @@ const SocialMedia = () => {
     }
   `)
   return data.wordpressAcfOptions.options.social_media.map(item => (
-    <SocialIcon href={item.url}>
+    <a href={item.url} className="ic-social" key={item.name}>
       <img src={item.icon.source_url} alt={item.name} />
-    </SocialIcon>
+    </a>
   ))
 }
 

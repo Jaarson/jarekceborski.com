@@ -2,7 +2,6 @@ import { Link } from "gatsby"
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 import styled from "styled-components"
-import SocialIcon from '../components/social-icon'
 
 const SocialPortfolio = () => {
   const data = useStaticQuery(graphql`
@@ -21,9 +20,9 @@ const SocialPortfolio = () => {
     }
   `)
   return data.wordpressAcfOptions.options.social_portfolio.map(item => (
-    <SocialIcon href={item.url}>
+    <a href={item.url} className="ic-social" key={item.name}>
       <img src={item.icon.source_url} alt={item.name} />
-    </SocialIcon>
+    </a>
   ))
 }
 
