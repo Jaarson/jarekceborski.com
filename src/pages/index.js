@@ -3,11 +3,14 @@ import Layout from "../components/layout"
 import SocialMedia from "../components/social-media"
 import SocialPortfolio from "../components/social-portfolio"
 import Header from "../components/header"
+import Footer from "../components/footer"
 import SEO from "../components/seo"
 import { graphql, StaticQuery, useStaticQuery } from "gatsby"
 
 import "../styles/styles.scss"
 import "../styles/about.scss"
+
+var ventureEvenItem = false
 
 const HomePage = () => (
   <StaticQuery
@@ -43,83 +46,105 @@ const HomePage = () => (
     render={props => (
       <>
         <Header />
-        <main itemscope itemtype="https://schema.org/Person">
+        <main itemScope itemType="https://schema.org/Person">
           <section>
-            <div class="hero-bio grid-12">
-              <aside class="grid-aside">
-                <h3 class="aside-whitebg">{props.wordpressPage.title}</h3>
+            <div className="hero-bio grid-12">
+              <aside className="grid-aside">
+                <h3 className="aside-whitebg">{props.wordpressPage.title}</h3>
               </aside>
-              <div class="grid-main">
-                <h1 itemprop="name">{props.wordpressPage.acf.header}</h1>
+              <div className="grid-main">
+                <h1 itemProp="name">{props.wordpressPage.acf.header}</h1>
                 <p
-                  class="p-small"
-                  itemprop="description"
+                  className="p-small"
+                  itemProp="description"
                   dangerouslySetInnerHTML={{
                     __html: props.wordpressPage.acf.bio,
                   }}
                 />
               </div>
             </div>
-            <div class="hero-photo grid-12">
-              <aside class="grid-aside meta-top">
-                <div class="small-title meta-item">
+            <div className="hero-photo grid-12">
+              <aside className="grid-aside meta-top">
+                <div className="small-title meta-item">
                   {props.wordpressPage.acf.social_media_title}
                   <div>
                     <SocialMedia />
                   </div>
                 </div>
-                <div class="small-title meta-item">
+                <div className="small-title meta-item">
                   {props.wordpressPage.acf.portfolio_title}
                   <div>
                     <SocialPortfolio />
                   </div>
                 </div>
               </aside>
-              <div class="grid-main">
-                <div class="jc-image" style={{background: `url(` + props.wordpressPage.featured_media.source_url + `) no-repeat center center/cover`}}></div>
+              <div className="grid-main">
+                <div
+                  className="jc-image"
+                  style={{
+                    background:
+                      `url(` +
+                      props.wordpressPage.featured_media.source_url +
+                      `) no-repeat center center/cover`,
+                  }}
+                ></div>
               </div>
             </div>
           </section>
-          <section class="work">
-      <div class="grid-12">
-        <div class="grid-aside grid-aside-padding">
-          <h3 class="aside-darkbg">{props.wordpressPage.acf.work_section_title}</h3>
-          <br />
-          <p class="small-title small-title-darkbg">{props.wordpressPage.acf.clients_title}</p>
-          <p class="p-extra-small p-extra-small-darkbg">{props.wordpressPage.acf.clients}</p>
-        </div>
-        <div class="grid-main grid-9 grid-work">
-          {props.wordpressPage.acf.venture.map(venture => (
-            <>
-            <div class="grid-9-item-4" key={venture.name}>
-              <h3 class="venture-active">{venture.name}</h3>
-              <p class="p-small venture-active">{venture.description}</p>
-              {venture.link ? <a href={venture.link.url} class="work-links">{venture.link.title}</a> : ''}
-              {venture.status}
+          <section className="work">
+            <div className="grid-12">
+              <div className="grid-aside grid-aside-padding">
+                <h3 className="aside-darkbg">
+                  {props.wordpressPage.acf.work_section_title}
+                </h3>
+                <br />
+                <p className="small-title small-title-darkbg">
+                  {props.wordpressPage.acf.clients_title}
+                </p>
+                <p className="p-extra-small p-extra-small-darkbg">
+                  {props.wordpressPage.acf.clients}
+                </p>
+              </div>
+              <div className="grid-main grid-9 grid-work">
+                {props.wordpressPage.acf.venture.map(venture => (
+                  <>
+                    <div className="grid-9-item-4" key={venture.name}>
+                      {venture.status === "Active" ? <h3 className="venture-active">{venture.name}</h3> : <h3 className="venture-inactive">{venture.name}</h3>}
+                      {venture.status === "Active" ? <p className="p-small venture-active">{venture.description}</p> : <p className="p-small venture-inactive">{venture.description}</p> }
+                      {venture.link ? (
+                        <a href={venture.link.url} className="work-links">
+                          {venture.link.title}
+                          <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                              <g id="link-arrow-white" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+                                  <g id="small-right">
+                                      <rect id="Rectangle" x="0" y="0" width="16" height="16"></rect>
+                                      <g id="Group" transform="translate(5.000000, 2.000000)" stroke="#FFFFFF" strokeLinecap="round" strokeLinejoin="round">
+                                          <polyline id="Path" points="0.5 0.5 6 6 0.5 11.5"></polyline>
+                                      </g>
+                                  </g>
+                              </g>
+                          </svg>
+                        </a>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                    {ventureEvenItem ? (
+                      ""
+                    ) : (
+                      <div
+                        className="grid-9-spacer-1"
+                        key={venture.name + "-s"}
+                      ></div>
+                    )}
+                    {(ventureEvenItem = !ventureEvenItem)}
+                  </>
+                ))}
+              </div>
             </div>
-
-            <div class="grid-9-spacer-1"></div>
-            </>
-          ))}
-        </div>
-      </div>
-    </section>
+          </section>
         </main>
-        {props.wordpressPage.title}
-
-        {props.wordpressPage.acf.header}
-        <p
-          class="p-small"
-          itemprop="description"
-          dangerouslySetInnerHTML={{ __html: props.wordpressPage.acf.bio }}
-        />
-        {props.wordpressPage.acf.venture.map(venture => (
-          <div key={venture.name}>
-            {venture.name} <br />
-            {venture.description} <br />
-            {venture.status}
-          </div>
-        ))}
+        <Footer />
       </>
     )}
   />

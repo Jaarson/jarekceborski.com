@@ -63,17 +63,12 @@ a.work-links {
   color: #fff;
 }
 
-a.work-links::after {
-  content: "";
-  display: inline-block;
-  height: 1.6rem;
-  width: 1.6rem;
-  background-image: url(/assets/icons/link-arrow-white.svg);
-  background-repeat: no-repeat;
-  vertical-align: middle;
+a.work-links svg {
   margin-left: 0.5rem;
-  margin-bottom: 0.1rem;
+  margin-bottom: -0.2rem;
 }
+
+
 
 h3.venture-active {
   color: white;
