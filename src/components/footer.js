@@ -1,6 +1,8 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import NewsletterForm from "../components/newsletter-form"
+import SocialMedia from "../components/social-media"
+import SocialPortfolio from "../components/social-portfolio"
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
 
@@ -45,9 +47,8 @@ const Footer = () => {
         </div>
         <div className="grid-9-spacer-1"></div>
         <div className="grid-9-item-4 footer-social">
-          <a href="#"><i className="ic-share-link"></i></a>
-          <a href="#"><i className="ic-share-twitter"></i></a>
-          <a href="#"><i className="ic-share-facebook"></i></a>
+        <SocialMedia />
+        <SocialPortfolio />
         </div>
       </div>
     </div>

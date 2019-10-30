@@ -29,6 +29,11 @@ a {
   text-decoration: none;
 }
 
+a svg {
+  margin-left: 0.5rem;
+  margin-bottom: -0.3rem;
+}
+
 h1 {
   font-family: $font-h1;
   font-weight: 400;
@@ -399,7 +404,7 @@ a.ic-share,
 a.ic-social {
   text-decoration: none;
   display: inline-block;
-  margin: 0.6rem 1rem 1rem 0;
+  margin: 0.6rem 1.2rem 1rem 0;
   opacity: 0.6;
 }
 

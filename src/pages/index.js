@@ -3,6 +3,7 @@ import Layout from "../components/layout"
 import SocialMedia from "../components/social-media"
 import SocialPortfolio from "../components/social-portfolio"
 import Header from "../components/header"
+import BlogListing from "../components/blog-listing"
 import Footer from "../components/footer"
 import SEO from "../components/seo"
 import { graphql, StaticQuery, useStaticQuery } from "gatsby"
@@ -39,6 +40,8 @@ const HomePage = () => (
                 target
               }
             }
+            blog_section_title
+            blogposts_number
           }
         }
       }
@@ -107,22 +110,64 @@ const HomePage = () => (
               </div>
               <div className="grid-main grid-9 grid-work">
                 {props.wordpressPage.acf.venture.map(venture => (
-                  <>
-                    <div className="grid-9-item-4" key={venture.name}>
-                      {venture.status === "Active" ? <h3 className="venture-active">{venture.name}</h3> : <h3 className="venture-inactive">{venture.name}</h3>}
-                      {venture.status === "Active" ? <p className="p-small venture-active">{venture.description}</p> : <p className="p-small venture-inactive">{venture.description}</p> }
+                  <React.Fragment key={venture.name}>
+                    <div
+                      className="grid-9-item-4"
+                      key={venture.name + "-venture"}
+                    >
+                      {venture.status === "Active" ? (
+                        <h3 className="venture-active">{venture.name}</h3>
+                      ) : (
+                        <h3 className="venture-inactive">{venture.name}</h3>
+                      )}
+                      {venture.status === "Active" ? (
+                        <p className="p-small venture-active">
+                          {venture.description}
+                        </p>
+                      ) : (
+                        <p className="p-small venture-inactive">
+                          {venture.description}
+                        </p>
+                      )}
                       {venture.link ? (
                         <a href={venture.link.url} className="work-links">
                           {venture.link.title}
-                          <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                              <g id="link-arrow-white" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
-                                  <g id="small-right">
-                                      <rect id="Rectangle" x="0" y="0" width="16" height="16"></rect>
-                                      <g id="Group" transform="translate(5.000000, 2.000000)" stroke="#FFFFFF" strokeLinecap="round" strokeLinejoin="round">
-                                          <polyline id="Path" points="0.5 0.5 6 6 0.5 11.5"></polyline>
-                                      </g>
-                                  </g>
+                          <svg
+                            width="16px"
+                            height="16px"
+                            viewBox="0 0 16 16"
+                            version="1.1"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <g
+                              id="link-arrow-white"
+                              stroke="none"
+                              strokeWidth="1"
+                              fill="none"
+                              fillRule="evenodd"
+                            >
+                              <g id="small-right">
+                                <rect
+                                  id="Rectangle"
+                                  x="0"
+                                  y="0"
+                                  width="16"
+                                  height="16"
+                                ></rect>
+                                <g
+                                  id="Group"
+                                  transform="translate(5.000000, 2.000000)"
+                                  stroke="#FFFFFF"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                >
+                                  <polyline
+                                    id="Path"
+                                    points="0.5 0.5 6 6 0.5 11.5"
+                                  ></polyline>
+                                </g>
                               </g>
+                            </g>
                           </svg>
                         </a>
                       ) : (
@@ -134,14 +179,21 @@ const HomePage = () => (
                     ) : (
                       <div
                         className="grid-9-spacer-1"
-                        key={venture.name + "-s"}
+                        key={venture.name + "-spacer"}
                       ></div>
                     )}
                     {(ventureEvenItem = !ventureEvenItem)}
-                  </>
+                  </React.Fragment>
                 ))}
               </div>
             </div>
+          </section>
+          <section
+            className="blog"
+            itemScope
+            itemType="http://schema.org/BlogPosting"
+          >
+            <BlogListing title={props.wordpressPage.acf.blog_section_title} numberOfBlogposts={parseInt(props.wordpressPage.acf.blogposts_number, 10)}/>
           </section>
         </main>
         <Footer />
