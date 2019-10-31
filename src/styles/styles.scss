@@ -29,6 +29,10 @@ a {
   text-decoration: none;
 }
 
+a:visited {
+  color: $font-color-primary;
+}
+
 a svg {
   margin-left: 0.5rem;
   margin-bottom: -0.3rem;
@@ -91,6 +95,8 @@ h4 {
 
 h4.blogpost-category {
   padding-top: 1rem;
+  padding-right: 1rem;
+  display: inline-block;
 }
 
 nav {
@@ -198,6 +204,19 @@ a.blog-link {
   opacity: 0.8;
   color: $font-color-primary;
   padding-bottom: 1rem;
+  white-space: nowrap;
+
+  &-active {
+    display: block;
+    font-family: $font-stack;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    opacity: 0.8;
+    color: $font-color-primary;
+    padding-bottom: 1rem;
+    white-space: nowrap;
+    font-weight: 600;
+  }
 }
 
 a.blog-link::after {
@@ -627,7 +646,7 @@ input.subscribe {
   }
 
   a.blog-link {
-    display: inline-block;
+    /*display: inline-block;*/
     padding-right: 1.2rem;
   }
 
