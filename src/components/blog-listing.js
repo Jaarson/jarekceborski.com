@@ -7,7 +7,6 @@ import Icon from "../components/icon"
 import BlogCategories from "../components/blog-categories"
 import { graphql, useStaticQuery } from "gatsby"
 
-let blogpostEvenItem = false
 let blogpostLimit = 2
 
 function checkCategories(requestedCategory, currentCategory) {
@@ -23,11 +22,12 @@ const BlogListing = props => {
             slug
             title
             excerpt
+            path
             featured_media {
               localFile {
                 childImageSharp {
                   fluid(maxWidth: 600) {
-                    ...GatsbyImageSharpFluid_tracedSVG
+                    ...GatsbyImageSharpFluid
                   }
                 }
               }
@@ -47,6 +47,8 @@ const BlogListing = props => {
     ? (blogpostLimit = data.allWordpressPost.edges.length)
     : (blogpostLimit = props.numberOfBlogposts)
 
+    console.log('Blogpost limit: ' + blogpostLimit)
+
   return (
     <React.Fragment>
       <div className="grid-12">
@@ -58,7 +60,7 @@ const BlogListing = props => {
               <h3 className="aside-whitebg no-padding">{props.title}</h3>
               <Link to="/blog" className="blog-link">
                 All blogposts
-                <Icon name="arrowRight" />
+                <Icon name="arrowRight" opacity="0.5" style={{marginLeft: '0.5rem'}} />
               </Link>
             </>
           )}
@@ -68,50 +70,34 @@ const BlogListing = props => {
             blogpost =>
               checkCategories(props.category, blogpost.node.categories) && (
                 <React.Fragment key={blogpost.node.slug}>
-                  <div
-                    className="grid-9-item-4"
-                    key={blogpost.node.slug + "-blogpost"}
-                  >
+                  <div className="grid-9-item-4" key={blogpost.node.slug + '-blogpost'}>
                     <article className="thumb">
-                      <a href="index.html">
+                      <Link to={'/blog' + blogpost.node.path}>
                         <figure className="figure-thumb" itemProp="image">
                           <Img
                             className="image-thumb"
-                            fluid={
-                              blogpost.node.featured_media.localFile
-                                .childImageSharp.fluid
-                            }
+                            fluid={blogpost.node.featured_media.localFile.childImageSharp.fluid}
                             alt={parse(blogpost.node.title)}
                           />
                         </figure>
-                      </a>
+                      </Link>
 
                       {blogpost.node.categories.map(category => (
-                        <Link to={'/blog/' + category.slug}>
+                        <Link to={'/blog/' + category.slug} key={category.slug}>
                         <h4 className="blogpost-category">
                           {parse(category.name)}
                         </h4>
                         </Link>
                       ))}
 
-                      <a href="#">
+                      <Link to={'/blog' + blogpost.node.path}>
                         <h3 itemProp="headline" className="blogpost-title">
                           {parse(blogpost.node.title)}
                         </h3>
-                      </a>
+                      </Link>
                       <p className="p-small">{parse(blogpost.node.excerpt)}</p>
                     </article>
                   </div>
-
-                  {blogpostEvenItem ? (
-                    ""
-                  ) : (
-                    <div
-                      className="grid-9-spacer-1"
-                      key={blogpost.node.slug + "-spacer"}
-                    ></div>
-                  )}
-                  {(blogpostEvenItem = !blogpostEvenItem)}
                 </React.Fragment>
               )
           )}

@@ -5,15 +5,14 @@ import SocialPortfolio from "../components/social-portfolio"
 import Header from "../components/header"
 import BlogListing from "../components/blog-listing"
 import Footer from "../components/footer"
+import Icon from "../components/icon"
 import SEO from "../components/seo"
+import parse from "html-react-parser"
 import { graphql, StaticQuery, useStaticQuery } from "gatsby"
 
 import "../styles/styles.scss"
-import "../styles/about.scss"
 
-var ventureEvenItem = false
-
-const HomePage = () => (
+const HomePage = ({ location }) => (
   <StaticQuery
     query={graphql`
       {
@@ -48,6 +47,11 @@ const HomePage = () => (
     `}
     render={props => (
       <>
+      <SEO
+        title={parse(props.wordpressPage.title)}
+        pageURL={location.origin + location.pathname}
+        pageImage={props.wordpressPage.featured_media.source_url}
+      />
         <Header />
         <main itemScope itemType="https://schema.org/Person">
           <section>
@@ -56,7 +60,7 @@ const HomePage = () => (
                 <h3 className="aside-whitebg">{props.wordpressPage.title}</h3>
               </aside>
               <div className="grid-main">
-                <h1 itemProp="name">{props.wordpressPage.acf.header}</h1>
+                <h1 itemProp="name" className="my-name">{props.wordpressPage.acf.header}</h1>
                 <p
                   className="p-small"
                   itemProp="description"
@@ -132,57 +136,12 @@ const HomePage = () => (
                       {venture.link ? (
                         <a href={venture.link.url} className="work-links">
                           {venture.link.title}
-                          <svg
-                            width="16px"
-                            height="16px"
-                            viewBox="0 0 16 16"
-                            version="1.1"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <g
-                              id="link-arrow-white"
-                              stroke="none"
-                              strokeWidth="1"
-                              fill="none"
-                              fillRule="evenodd"
-                            >
-                              <g id="small-right">
-                                <rect
-                                  id="Rectangle"
-                                  x="0"
-                                  y="0"
-                                  width="16"
-                                  height="16"
-                                ></rect>
-                                <g
-                                  id="Group"
-                                  transform="translate(5.000000, 2.000000)"
-                                  stroke="#FFFFFF"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <polyline
-                                    id="Path"
-                                    points="0.5 0.5 6 6 0.5 11.5"
-                                  ></polyline>
-                                </g>
-                              </g>
-                            </g>
-                          </svg>
+                          <Icon name="arrowRight" color="#ffffff" style={{marginLeft: '0.5rem'}} />
                         </a>
                       ) : (
                         ""
                       )}
                     </div>
-                    {ventureEvenItem ? (
-                      ""
-                    ) : (
-                      <div
-                        className="grid-9-spacer-1"
-                        key={venture.name + "-spacer"}
-                      ></div>
-                    )}
-                    {(ventureEvenItem = !ventureEvenItem)}
                   </React.Fragment>
                 ))}
               </div>

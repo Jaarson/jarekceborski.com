@@ -1,8 +1,5 @@
-import { Link } from "gatsby"
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
-import styled from "styled-components"
-import SocialIcon from '../components/social-icon'
 
 const SocialMedia = () => {
   const data = useStaticQuery(graphql`

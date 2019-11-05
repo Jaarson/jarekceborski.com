@@ -2,10 +2,10 @@ import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 
-const Header = ({ hideMenu, logoColor }) => (
-  <nav>
+const Header = ({ hideMenu, logoColor, bgColor, wideScreen }) => (
+  <nav className={wideScreen ? 'widescreen' : ''} style={{backgroundColor: bgColor}} >
     <a href="/">
-      <svg width="70px" height="28px" viewBox="0 0 70 28" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      <svg className="logo" width="70px" height="28px" viewBox="0 0 70 28" version="1.1" xmlns="http://www.w3.org/2000/svg"
       >
         <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
           <path
@@ -17,18 +17,22 @@ const Header = ({ hideMenu, logoColor }) => (
         </g>
       </svg>
     </a>
-    {hideMenu ? '' : <div className="menu-top"><a href="/blog" className="menu-top-item">Blog</a></div>}
+    {hideMenu ? '' : <div className="menu-top"><Link to="/blog" className="menu-top-item">Blog</Link></div>}
   </nav>
 )
 
 Header.propTypes = {
   hideMenu: PropTypes.bool,
   logoColor: PropTypes.string,
+  bgColor: PropTypes.string,
+  wideScreen: PropTypes.bool,
 }
 
 Header.defaultProps = {
   hideMenu: false,
   logoColor: "#000000",
+  bgColor: "transparent",
+  wideScreen: false,
 }
 
 export default Header

@@ -31,13 +31,7 @@ exports.createPages = async ({ graphql, actions }) => {
       allWordpressPost {
         edges {
           node {
-            id
-            path
-            status
-            template
-            format
-            title
-            content
+            slug
           }
         }
       }
@@ -58,7 +52,11 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   // Access query results via object destructuring
-  const { allWordpressPage, allWordpressPost, allWordpressCategory } = result.data
+  const {
+    allWordpressPage,
+    allWordpressPost,
+    allWordpressCategory,
+  } = result.data
 
   // Create Page pages.
   const pageTemplate = path.resolve(`./src/templates/page.js`)
@@ -88,16 +86,18 @@ exports.createPages = async ({ graphql, actions }) => {
   // The Post ID is prefixed with 'POST_'
   allWordpressPost.edges.forEach(edge => {
     createPage({
-      path: edge.node.path,
+      path: "blog/" + edge.node.slug,
       component: slash(postTemplate),
-      context: edge.node,
+      context: {
+        slug: edge.node.slug,
+      },
     })
   })
 
   const blogCategoryTemplate = path.resolve(`./src/templates/blog.js`)
   allWordpressCategory.edges.forEach(edge => {
     createPage({
-      path: 'blog/' + edge.node.slug,
+      path: "blog/" + edge.node.slug,
       component: slash(blogCategoryTemplate),
       context: edge.node,
     })

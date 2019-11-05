@@ -35,6 +35,11 @@ export default class NewsletterForm extends React.Component {
         })
       }
     })
+    xhr.addEventListener("error", () => {
+      this.setState({
+        message: 'Connection error, try again later...',
+      })
+    })
     xhr.open(
       "POST",
       "http://jarekceborskicom.local/wp-json/newsletter/v1/subscribe"

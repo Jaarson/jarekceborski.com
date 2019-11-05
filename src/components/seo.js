@@ -7,33 +7,45 @@
 
 import React from "react"
 import PropTypes from "prop-types"
-import Helmet from "react-helmet"
+import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
-function SEO({ description, lang, meta, title }) {
-  const { site } = useStaticQuery(
+function SEO({ description, lang, meta, title, wideScreen, canonical, isBlogpost, pageURL, pageImage }) {
+  const data = useStaticQuery(
     graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
+      {
+        allWordpressSiteMetadata {
+          edges {
+            node {
+              name
+              description
+            }
+          }
+        }
+
+        wordpressAcfOptions {
+          options {
+            social_media {
+              name
+              user_name
+            }
           }
         }
       }
     `
   )
 
-  const metaDescription = description || site.siteMetadata.description
+  const metaDescription = description || data.allWordpressSiteMetadata.edges[0].node.description
+  const metaType = isBlogpost ? 'article' : 'website'
 
   return (
+    <>
     <Helmet
       htmlAttributes={{
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={`%s | ${data.allWordpressSiteMetadata.edges[0].node.name}`}
       meta={[
         {
           name: `description`,
@@ -49,7 +61,15 @@ function SEO({ description, lang, meta, title }) {
         },
         {
           property: `og:type`,
-          content: `website`,
+          content: metaType,
+        },
+        {
+          property: `og:url`,
+          content: pageURL,
+        },
+        {
+          property: `og:image`,
+          content: pageImage,
         },
         {
           name: `twitter:card`,
@@ -57,7 +77,7 @@ function SEO({ description, lang, meta, title }) {
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author,
+          content: data.wordpressAcfOptions.options.social_media.find(function(el) { return el.name === "Twitter"}).user_name,
         },
         {
           name: `twitter:title`,
@@ -69,6 +89,15 @@ function SEO({ description, lang, meta, title }) {
         },
       ].concat(meta)}
     />
+    <Helmet>
+    <link rel="stylesheet" href="https://use.typekit.net/liu3fgy.css" />
+    <link rel="stylesheet" href="/styles/prism.css" />
+    <script src="/scripts/prism.js" type="text/javascript" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {wideScreen ? <script src="/scripts/header-interaction.js" type="text/javascript" /> : ''}
+    
+    </Helmet>
+    </>
   )
 }
 
@@ -76,6 +105,10 @@ SEO.defaultProps = {
   lang: `en`,
   meta: [],
   description: ``,
+  wideScreen: false,
+  isBlogpost: false,
+  canonical: ``,
+  pageURL: ``,
 }
 
 SEO.propTypes = {
@@ -83,6 +116,19 @@ SEO.propTypes = {
   lang: PropTypes.string,
   meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired,
+  wideScreen: PropTypes.bool,
+  isBlogpost: PropTypes.bool,
+  canonical: PropTypes.string,
+  pageURL: PropTypes.string,
 }
 
 export default SEO
+
+
+/* 
+<meta property="og:title" content="Hows running helps me manage my day and read 10 books a year - Jarek Ceborski blog" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://127.0.0.1:5500/index.html" />
+<meta property="og:image" content="http://127.0.0.1:5500/assets/images/image.png" />
+<meta property="article:published_time" content="2019-09-12" /> 
+*/

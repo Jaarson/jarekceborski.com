@@ -24,7 +24,7 @@ const BlogCategories = props => {
       <h3 className="aside-whitebg no-padding">Blog</h3>
       <Link to="/blog" className={props.highlightCategory === null ? 'blog-link-active' : 'blog-link'}>
         All
-        <Icon name="arrowRight" />
+        <Icon name="arrowRight" opacity={props.highlightCategory === null ? '1' : '0.5'} style={{marginLeft: '0.5rem'}} />
       </Link>
       {data.allWordpressCategory.edges.map(
         category =>
@@ -36,7 +36,7 @@ const BlogCategories = props => {
               alt={category.node.name + " (" + category.node.count + ")"}
             >
               {category.node.name}
-              <Icon name="arrowRight" />
+              <Icon name="arrowRight" opacity={props.highlightCategory === category.node.slug ? '1' : '0.5'} style={{marginLeft: '0.5rem'}} />
             </Link>
           )
       )}

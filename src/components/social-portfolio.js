@@ -1,7 +1,6 @@
 import { Link } from "gatsby"
 import React from "react"
 import { graphql, useStaticQuery } from "gatsby"
-import styled from "styled-components"
 
 const SocialPortfolio = () => {
   const data = useStaticQuery(graphql`
