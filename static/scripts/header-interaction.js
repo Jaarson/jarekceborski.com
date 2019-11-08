@@ -3,7 +3,7 @@ var isheaderFadedout = false;
 function headerNormal() {
     document.querySelector(".image-cover").style.opacity = "1";
     document.querySelector(".post-header").style.top = "0";
-    document.querySelector(".post-header").style.opacity = "1";
+    document.querySelector(".post-header-bg").style.opacity = "1";
     document.querySelector(".mini").style.opacity = "0.5";
     document.querySelector("nav").style.opacity = "1";
     isheaderFadedout = false;
@@ -12,7 +12,7 @@ function headerNormal() {
 function headerFaded() {
     document.querySelector(".image-cover").style.opacity = "0";
     document.querySelector(".post-header").style.top = "-20rem";
-    document.querySelector(".post-header").style.opacity = "0.8";
+    document.querySelector(".post-header-bg").style.opacity = "0.5";
     document.querySelector(".mini").style.opacity = "0";
     document.querySelector("nav").style.opacity = "0.8";
     isheaderFadedout = true;

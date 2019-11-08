@@ -4,6 +4,7 @@ require("dotenv").config ({
 
 module.exports = {
   siteMetadata: {
+    siteUrl: `https://jarekceborski.com`,
     title: `Gatsby Default Starter`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
@@ -20,15 +21,22 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sass`,
     {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        exclude: [`/home`, `/sample`, `/newsletter`],
+      }
+    },
+    {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `JarekCeborski`,
-        short_name: `JarekCeborski`,
+        name: `Jarek Ceborski`,
+        short_name: `jarekceborski`,
         start_url: `/`,
         display: `standalone`,
         icon: 'src/images/jc-icon.png',
       },
     },
+    `gatsby-plugin-offline`,
     {
       resolve: "gatsby-plugin-react-svg",
       options: {

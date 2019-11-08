@@ -4,7 +4,7 @@ import React from "react"
 
 const Header = ({ hideMenu, logoColor, bgColor, wideScreen }) => (
   <nav className={wideScreen ? 'widescreen' : ''} style={{backgroundColor: bgColor}} >
-    <a href="/">
+    <a href="/" alt="Home">
       <svg className="logo" width="70px" height="28px" viewBox="0 0 70 28" version="1.1" xmlns="http://www.w3.org/2000/svg"
       >
         <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

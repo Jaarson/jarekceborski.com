@@ -32,20 +32,54 @@ function hexToRgbA(hex, opacity) {
   throw new Error("Bad Hex")
 }
 
+function hexToLightness(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  var r = parseInt(result[1], 16)
+  var g = parseInt(result[2], 16)
+  var b = parseInt(result[3], 16)
+  r /= 255
+  g /= 255
+  b /= 255
+  var max = Math.max(r, g, b),
+    min = Math.min(r, g, b)
+  var h,
+    s,
+    l = (max + min) / 2
+  if (max === min) {
+    h = s = 0
+  } else {
+    var d = max - min
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0)
+        break
+      case g:
+        h = (b - r) / d + 2
+        break
+      case b:
+        h = (r - g) / d + 4
+        break
+    }
+    h /= 6
+  }
+  return l
+}
+
 const Post = ({ data, location }) => {
-  console.log(data)
   if (
     data.allWordpressPost.edges[0].node.acf.text_color &&
     data.allWordpressPost.edges[0].node.acf.background_color
   ) {
     themedPost = true
   }
-  textColor = data.allWordpressPost.edges[0].node.acf.text_color
-    ? data.allWordpressPost.edges[0].node.acf.text_color
-    : "#000000"
-  bgColor = data.allWordpressPost.edges[0].node.acf.background_color
-    ? data.allWordpressPost.edges[0].node.acf.background_color
-    : "#ffffff"
+  textColor = data.allWordpressPost.edges[0].node.acf.text_color || "#000000"
+  bgColor = data.allWordpressPost.edges[0].node.acf.background_color || "#ffffff"
+
+  const shareSelfUrl = location.origin + location.pathname 
+  const shareTwitterUrl = 'https://twitter.com/share?text=' + encodeURIComponent(parse(data.allWordpressPost.edges[0].node.title)) + '&url=' + shareSelfUrl
+  const shareFacebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + shareSelfUrl
+
 
   return (
     <React.Fragment>
@@ -67,29 +101,60 @@ const Post = ({ data, location }) => {
             hexToRgbA(textColor, 0.1) +
             ` 1px solid;
       }
-    }
-
+      .post-header-bg-bg { background-color: ` + bgColor + `;}
+    }      
     `,
         }}
       />
+
+      { 
+        /* For themed post: check if given bg color is darken than text color,
+        and apply styles accrodingly */
+        themedPost && (
+            hexToLightness(bgColor) < hexToLightness(textColor) ? (
+            <style
+              dangerouslySetInnerHTML={{
+                __html:
+                  `
+          .image-author { mix-blend-mode: lighten; background-color: ` + textColor + `;}
+          .image-author img { mix-blend-mode: multiply; }
+          `,
+              }}
+            />
+          ) : (
+            <style
+              dangerouslySetInnerHTML={{
+                __html:
+                  `
+          .image-author { mix-blend-mode: multiply; background-color: ` + textColor + `; }
+          .image-author img { mix-blend-mode: lighten; filter: brightness(1.1); }
+          `,
+              }}
+            />
+          )
+        )
+      }
+
       <SEO
         title={parse(data.allWordpressPost.edges[0].node.title)}
         wideScreen
         isBlogpost
         pageURL={location.origin + location.pathname}
-        pageImage={data.allWordpressPost.edges[0].node.featured_media.source_url}
+        pageImage={
+          data.allWordpressPost.edges[0].node.featured_media.source_url
+        }
         meta={[
           {
-            property: 'article:published_time',
+            property: "article:published_time",
             content: data.allWordpressPost.edges[0].node.dateOG,
           },
           {
-            property: 'article:author',
+            property: "article:author",
             content: data.allWordpressPost.edges[0].node.author.name,
           },
         ]}
       />
-      
+
       <Header hideMenu logoColor={textColor} bgColor={bgColor} wideScreen />
 
       <article
@@ -97,6 +162,8 @@ const Post = ({ data, location }) => {
         itemType="http://schema.org/BlogPosting"
         className="widescreen"
       >
+        <div
+          className="post-header-bg-bg"></div>
         <div
           className="post-header-bg"
           style={{
@@ -162,18 +229,13 @@ const Post = ({ data, location }) => {
                 className="small-title meta-item meta-item-widescreen"
                 style={themedPost ? { color: textColor } : {}}
               >
-                <div
+                <Img
                   className="image-author"
-                  style={{
-                    backgroundColor: textColor,
-                    backgroundBlendMode: "screen",
-                    backgroundImage:
-                      "url(" +
-                      data.allWordpressPost.edges[0].node.author.avatar_urls
-                        .wordpress_96 +
-                      ")",
-                  }}
-                ></div>
+                  fluid={
+                    data.allWordpressPost.edges[0].node.author.acf.avatar
+                      .localFile.childImageSharp.fluid
+                  }
+                />
                 Written by
                 <span
                   className="small-copy"
@@ -226,21 +288,21 @@ const Post = ({ data, location }) => {
               >
                 Share
                 <div>
-                  <a href="#" className="ic-share">
+                  <a href={shareSelfUrl} className="ic-share">
                     {themedPost ? (
                       <Icon name="shareLink" color={textColor} />
                     ) : (
                       <Icon name="shareLink" />
                     )}
                   </a>
-                  <a href="#" className="ic-share">
+                  <a href={shareTwitterUrl} className="ic-share">
                     {themedPost ? (
                       <Icon name="twitter" color={textColor} />
                     ) : (
                       <Icon name="twitter" />
                     )}
                   </a>
-                  <a href="#" className="ic-share">
+                  <a href={shareFacebookUrl} className="ic-share">
                     {themedPost ? (
                       <Icon name="facebook" color={textColor} />
                     ) : (
@@ -268,13 +330,13 @@ const Post = ({ data, location }) => {
         <main className="post-content grid-12 grid-12-widescreen">
           <aside className="grid-aside grid-aside-widescreen meta-item-social-2col-hide meta-item-social-2col-hide-widescreen">
             <div className="small-title meta-item meta-item-widescreen meta-item-social-2col meta-item-social-2col-widescreen">
-              <a href="#" className="ic-share">
+              <a href={shareSelfUrl} className="ic-share">
                 <Icon name="shareLink" />
               </a>
-              <a href="#" className="ic-share">
+              <a href={shareTwitterUrl} className="ic-share">
                 <Icon name="twitter" />
               </a>
-              <a href="#" className="ic-share">
+              <a href={shareFacebookUrl} className="ic-share">
                 <Icon name="facebook" />
               </a>
             </div>
@@ -299,9 +361,7 @@ const Post = ({ data, location }) => {
                       to={"/blog/" + category.slug}
                       key={"/blog/" + category.slug}
                     >
-                      <span className="small-copy">
-                        {parse(category.name)}
-                      </span>
+                      <span className="small-copy">{parse(category.name)}</span>
                     </Link>
                   )
                 )}
@@ -319,13 +379,13 @@ const Post = ({ data, location }) => {
               <div className="small-title meta-item-metabottom">
                 Share
                 <div>
-                  <a href="#" className="ic-share">
+                  <a href={shareSelfUrl} className="ic-share">
                     <Icon name="shareLink" />
                   </a>
-                  <a href="#" className="ic-share">
+                  <a href={shareTwitterUrl} className="ic-share">
                     <Icon name="twitter" />
                   </a>
-                  <a href="#" className="ic-share">
+                  <a href={shareFacebookUrl} className="ic-share">
                     <Icon name="facebook" />
                   </a>
                 </div>
@@ -367,6 +427,17 @@ export const query = graphql`
             description
             avatar_urls {
               wordpress_96
+            }
+            acf {
+              avatar {
+                localFile {
+                  childImageSharp {
+                    fluid(maxWidth: 140) {
+                      ...GatsbyImageSharpFluid
+                    }
+                  }
+                }
+              }
             }
           }
           featured_media {
