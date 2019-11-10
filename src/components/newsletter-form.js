@@ -14,15 +14,12 @@ export default class NewsletterForm extends React.Component {
     this.setState({
       [name]: value,
     })
-    //console.log(this.state.email)
   }
 
   handleSubmit = event => {
     event.preventDefault()
     var xhr = new XMLHttpRequest()
     xhr.addEventListener("load", () => {
-      // update the state of the component with the result here
-      //console.log(xhr.responseText)
       if (xhr.status != 200) {
       var response = JSON.parse(xhr.response)
       this.setState({
@@ -30,7 +27,6 @@ export default class NewsletterForm extends React.Component {
       })
       } else {
         this.setState({
-          //message: "A confirmation email is on the way. Follow the instructions and check the spam folder. Thank you.",
           message: this.props.newsletter_success_message
         })
       }
@@ -42,7 +38,7 @@ export default class NewsletterForm extends React.Component {
     })
     xhr.open(
       "POST",
-      "http://jarekceborskicom.local/wp-json/newsletter/v1/subscribe"
+      "https://cms.jarekceborski.com/wp-json/newsletter/v1/subscribe"
     )
     xhr.setRequestHeader("Content-Type", "application/json")
     xhr.send(

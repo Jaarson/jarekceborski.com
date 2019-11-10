@@ -92,9 +92,9 @@ function SEO({ description, lang, meta, title, wideScreen, canonical, isBlogpost
     <Helmet>
     <link rel="stylesheet" href="https://use.typekit.net/liu3fgy.css" />
     <link rel="stylesheet" href="/styles/prism.css" />
-    <script src="/scripts/prism.js" type="text/javascript" />
+    {/* <script src="/scripts/prism.js" type="text/javascript" /> */}
+    {/* {wideScreen ? <script src="/scripts/header-interaction.js" type="text/javascript" /> : ''} */}
     {canonical && <link rel="canonical" href={canonical} />}
-    {wideScreen ? <script src="/scripts/header-interaction.js" type="text/javascript" /> : ''}
     
     </Helmet>
     </>
@@ -123,12 +123,3 @@ SEO.propTypes = {
 }
 
 export default SEO
-
-
-/* 
-<meta property="og:title" content="Hows running helps me manage my day and read 10 books a year - Jarek Ceborski blog" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://127.0.0.1:5500/index.html" />
-<meta property="og:image" content="http://127.0.0.1:5500/assets/images/image.png" />
-<meta property="article:published_time" content="2019-09-12" /> 
-*/

@@ -80,7 +80,6 @@ const Post = ({ data, location }) => {
   const shareTwitterUrl = 'https://twitter.com/share?text=' + encodeURIComponent(parse(data.allWordpressPost.edges[0].node.title)) + '&url=' + shareSelfUrl
   const shareFacebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + shareSelfUrl
 
-
   return (
     <React.Fragment>
       <style
@@ -137,6 +136,7 @@ const Post = ({ data, location }) => {
 
       <SEO
         title={parse(data.allWordpressPost.edges[0].node.title)}
+        description={parse(data.allWordpressPost.edges[0].node.excerpt)}
         wideScreen
         isBlogpost
         pageURL={location.origin + location.pathname}

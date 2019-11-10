@@ -30,7 +30,7 @@ function adjustHeader() {
     }
 }
 
-if (document.getElementsByClassName("image-cover")) {
+if (document.getElementsByClassName("image-cover").length > 0) {
     window.onresize = adjustHeader;
     window.onscroll = adjustHeader;
 }

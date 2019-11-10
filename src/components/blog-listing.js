@@ -47,8 +47,6 @@ const BlogListing = props => {
     ? (blogpostLimit = data.allWordpressPost.edges.length)
     : (blogpostLimit = props.numberOfBlogposts)
 
-    console.log('Blogpost limit: ' + blogpostLimit)
-
   return (
     <React.Fragment>
       <div className="grid-12">

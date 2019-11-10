@@ -1,5 +1,4 @@
 import React from "react"
-import Layout from "../components/layout"
 import SocialMedia from "../components/social-media"
 import SocialPortfolio from "../components/social-portfolio"
 import Header from "../components/header"

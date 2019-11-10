@@ -42,7 +42,7 @@ const Footer = ({ wideScreen }) => {
       <div className={wideScreen ? 'grid-aside grid-aside-widescreen' : 'grid-aside'}></div>
       <div className={wideScreen ? 'grid-main grid-main-widescreen grid-9 grid-border-top' : 'grid-main grid-9 grid-border-top'}>
         <div className="grid-9-item-4">
-          <p className="p-extra-small">© {new Date().getFullYear()}, {data.wordpressAcfOptions.options.copyrights_note}</p>
+          <p className="p-extra-small">© {new Date().getFullYear()}, {data.wordpressAcfOptions.options.copyrights_note} • <Link to='/privacy-terms'>Privacy &amp; Terms</Link></p>
         </div>
         <div className="grid-9-item-4 footer-social">
         <SocialMedia />
