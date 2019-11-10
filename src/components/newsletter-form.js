@@ -38,13 +38,13 @@ export default class NewsletterForm extends React.Component {
     })
     xhr.open(
       "POST",
-      "https://cms.jarekceborski.com/wp-json/newsletter/v1/subscribe"
+      process.env.GATSBY_WP_NEWSLETTER_SUBSCRIBE_URL
     )
     xhr.setRequestHeader("Content-Type", "application/json")
     xhr.send(
       JSON.stringify({
         email: this.state.email,
-        api_key: "b29c63ee-ced7-4081-b4f9-452620eae9fa",
+        api_key: process.env.GATSBY_WP_NEWSLETTER_API_KEY,
       })
     )
   }

@@ -36,6 +36,14 @@ module.exports = {
         icon: 'src/images/jc-icon.png',
       },
     },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: process.env.GA_ID,
+        head: false,
+        anonymize: true,
+      }
+    },
     `gatsby-plugin-offline`,
     {
       resolve: "gatsby-plugin-react-svg",
