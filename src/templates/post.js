@@ -180,38 +180,7 @@ const Post = ({ data, location }) => {
                   color: textColor,
                 }}
               >
-                <svg
-                  width="16px"
-                  height="16px"
-                  viewBox="0 0 16 16"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g
-                    stroke="none"
-                    strokeWidth="1"
-                    fill="none"
-                    fillRule="evenodd"
-                  >
-                    <g
-                      id="small-right"
-                      transform="translate(8.000000, 8.000000) scale(-1, 1) translate(-8.000000, -8.000000) "
-                    >
-                      <g
-                        id="Group"
-                        transform="translate(5.000000, 2.000000)"
-                        stroke={textColor}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <polyline
-                          id="Path"
-                          points="0.5 0.5 6 6 0.5 11.5"
-                        ></polyline>
-                      </g>
-                    </g>
-                  </g>
-                </svg>
+                <Icon name="arrowLeft" color={textColor} />
                 All blogposts
               </Link>
             </aside>
