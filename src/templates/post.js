@@ -154,9 +154,7 @@ const Post = ({ data, location }) => {
           },
         ]}
       />
-
       <Header hideMenu logoColor={textColor} bgColor={bgColor} wideScreen />
-
       <article
         itemScope
         itemType="http://schema.org/BlogPosting"
@@ -180,38 +178,7 @@ const Post = ({ data, location }) => {
                   color: textColor,
                 }}
               >
-                <svg
-                  width="16px"
-                  height="16px"
-                  viewBox="0 0 16 16"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <g
-                    stroke="none"
-                    strokeWidth="1"
-                    fill="none"
-                    fillRule="evenodd"
-                  >
-                    <g
-                      id="small-right"
-                      transform="translate(8.000000, 8.000000) scale(-1, 1) translate(-8.000000, -8.000000) "
-                    >
-                      <g
-                        id="Group"
-                        transform="translate(5.000000, 2.000000)"
-                        stroke={textColor}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <polyline
-                          id="Path"
-                          points="0.5 0.5 6 6 0.5 11.5"
-                        ></polyline>
-                      </g>
-                    </g>
-                  </g>
-                </svg>
+                <Icon name="arrowLeft" color={textColor} />
                 All blogposts
               </Link>
             </aside>
@@ -227,6 +194,9 @@ const Post = ({ data, location }) => {
             <aside className="grid-aside grid-aside-widescreen meta-top meta-top-widescreen">
               <div
                 className="small-title meta-item meta-item-widescreen"
+                itemProp="author"
+                itemScope
+                itemType="https://schema.org/Person"
                 style={themedPost ? { color: textColor } : {}}
               >
                 <Img
@@ -235,11 +205,12 @@ const Post = ({ data, location }) => {
                     data.allWordpressPost.edges[0].node.author.acf.avatar
                       .localFile.childImageSharp.fluid
                   }
+                  itemProp="image"
                 />
                 Written by
                 <span
                   className="small-copy"
-                  itemProp="author"
+                  itemProp="name"
                   style={{ color: textColor }}
                 >
                   {parse(data.allWordpressPost.edges[0].node.author.name)}
@@ -315,6 +286,7 @@ const Post = ({ data, location }) => {
             <figure
               className="grid-main grid-main-widescreen figure-cover figure-cover-widescreen"
               itemProp="image"
+              itemScope itemType="http://schema.org/ImageObject"
             >
               <Img
                 className="image-cover"
@@ -322,7 +294,9 @@ const Post = ({ data, location }) => {
                   data.allWordpressPost.edges[0].node.featured_media.localFile
                     .childImageSharp.fluid
                 }
-                alt={data.allWordpressPost.edges[0].node.title}
+                alt={parse(data.allWordpressPost.edges[0].node.title)}
+                title={parse(data.allWordpressPost.edges[0].node.title)}
+                itemProp="url"
               />
             </figure>
           </header>
@@ -347,9 +321,17 @@ const Post = ({ data, location }) => {
           >
             {parse(data.allWordpressPost.edges[0].node.content)}
             <aside className="meta-bottom">
-              <div className="small-title meta-item-metabottom">
+              <div 
+              className="small-title meta-item-metabottom"
+              itemProp="author"
+              itemScope
+              itemType="https://schema.org/Person"
+              >
                 Written by
-                <span className="small-copy" itemProp="author">
+                <span
+                className="small-copy"
+                itemProp="name"
+                >
                   {parse(data.allWordpressPost.edges[0].node.author.name)}
                 </span>
               </div>
