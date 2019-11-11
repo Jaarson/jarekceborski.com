@@ -154,9 +154,7 @@ const Post = ({ data, location }) => {
           },
         ]}
       />
-
       <Header hideMenu logoColor={textColor} bgColor={bgColor} wideScreen />
-
       <article
         itemScope
         itemType="http://schema.org/BlogPosting"
@@ -196,6 +194,9 @@ const Post = ({ data, location }) => {
             <aside className="grid-aside grid-aside-widescreen meta-top meta-top-widescreen">
               <div
                 className="small-title meta-item meta-item-widescreen"
+                itemProp="author"
+                itemScope
+                itemType="https://schema.org/Person"
                 style={themedPost ? { color: textColor } : {}}
               >
                 <Img
@@ -204,11 +205,12 @@ const Post = ({ data, location }) => {
                     data.allWordpressPost.edges[0].node.author.acf.avatar
                       .localFile.childImageSharp.fluid
                   }
+                  itemProp="image"
                 />
                 Written by
                 <span
                   className="small-copy"
-                  itemProp="author"
+                  itemProp="name"
                   style={{ color: textColor }}
                 >
                   {parse(data.allWordpressPost.edges[0].node.author.name)}
@@ -284,6 +286,7 @@ const Post = ({ data, location }) => {
             <figure
               className="grid-main grid-main-widescreen figure-cover figure-cover-widescreen"
               itemProp="image"
+              itemScope itemType="http://schema.org/ImageObject"
             >
               <Img
                 className="image-cover"
@@ -291,7 +294,9 @@ const Post = ({ data, location }) => {
                   data.allWordpressPost.edges[0].node.featured_media.localFile
                     .childImageSharp.fluid
                 }
-                alt={data.allWordpressPost.edges[0].node.title}
+                alt={parse(data.allWordpressPost.edges[0].node.title)}
+                title={parse(data.allWordpressPost.edges[0].node.title)}
+                itemProp="url"
               />
             </figure>
           </header>
@@ -316,9 +321,17 @@ const Post = ({ data, location }) => {
           >
             {parse(data.allWordpressPost.edges[0].node.content)}
             <aside className="meta-bottom">
-              <div className="small-title meta-item-metabottom">
+              <div 
+              className="small-title meta-item-metabottom"
+              itemProp="author"
+              itemScope
+              itemType="https://schema.org/Person"
+              >
                 Written by
-                <span className="small-copy" itemProp="author">
+                <span
+                className="small-copy"
+                itemProp="name"
+                >
                   {parse(data.allWordpressPost.edges[0].node.author.name)}
                 </span>
               </div>
