@@ -297,12 +297,6 @@ pre[class*="language-"] {
   margin: 3rem 0 !important;
 }
 
-/* code.hljs {
-  padding: 0 3rem !important;
-  margin: 1rem 0 3rem 0;
-  border-radius: 6px;
-} */
-
 .small-title {
   font-family: $font-stack;
   font-weight: 400;
@@ -897,6 +891,11 @@ p.venture-inactive {
 /* 1920px start */
 
 @media (min-width: 1920px) {
+
+  html {
+    overflow-x: hidden;
+  }
+
   blockquote {
     position: static;
     margin: 0 4rem;
