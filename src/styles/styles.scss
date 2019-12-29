@@ -42,10 +42,11 @@ body {
 a {
   text-decoration: none;
   color: $font-color-primary;
-
+ /*
   &:visited {
     color: $font-color-primary;
   }
+  */
 }
 
 a svg:not(.logo) {
@@ -82,7 +83,7 @@ h2 {
   padding: 0 15% 0 0;
 }
 
-h3 {
+h3, h3 * {
   font-family: $font-stack;
   font-weight: 400;
   font-size: 2.4rem;
@@ -160,6 +161,11 @@ dl * {
   font-size: 1.8rem;
   line-height: 3rem;
   color: $font-color-graphite;
+}
+
+p a {
+  text-decoration: underline;
+  color: $cta-button-color;
 }
 
 dl dt {
