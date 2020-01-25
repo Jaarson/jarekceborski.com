@@ -1,5 +1,5 @@
-require("dotenv").config ({
-  path: '.env'
+require("dotenv").config({
+  path: ".env",
 })
 
 module.exports = {
@@ -31,7 +31,7 @@ module.exports = {
       resolve: `gatsby-plugin-sitemap`,
       options: {
         exclude: [`/home`, `/sample`, `/newsletter`],
-      }
+      },
     },
     {
       resolve: `gatsby-plugin-manifest`,
@@ -40,7 +40,7 @@ module.exports = {
         short_name: `jarekceborski`,
         start_url: `/`,
         display: `standalone`,
-        icon: 'src/images/jc-icon.png',
+        icon: "src/images/jc-icon.png",
       },
     },
     {
@@ -49,7 +49,7 @@ module.exports = {
         trackingId: process.env.GA_ID,
         head: false,
         anonymize: true,
-      }
+      },
     },
     `gatsby-plugin-offline`,
     {
@@ -57,8 +57,8 @@ module.exports = {
       options: {
         rule: {
           //include: /assets/ // See below to configure properly
-        }
-      }
+        },
+      },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline

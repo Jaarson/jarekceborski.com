@@ -8,15 +8,16 @@
 //const prismCodeSnippets = require('./static/scripts/prism.js')
 
 const insertJS = () => {
-  const addJS = (src) => {
+  const addJS = src => {
     const s = document.createElement(`script`)
     s.type = `text/javascript`
     s.src = src
     document.getElementsByTagName(`head`)[0].appendChild(s)
   }
 
-  addJS('/scripts/header-interaction.js')
-  addJS('/scripts/prism.js')
+  addJS("/scripts/header-interaction.js")
+  addJS("/scripts/prism.js")
+  addJS("https://platform.twitter.com/widgets.js")
 }
 
 exports.onRouteUpdate = () => {

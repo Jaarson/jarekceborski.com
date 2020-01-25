@@ -42,7 +42,7 @@ body {
 a {
   text-decoration: none;
   color: $font-color-primary;
- /*
+  /*
   &:visited {
     color: $font-color-primary;
   }
@@ -83,7 +83,8 @@ h2 {
   padding: 0 15% 0 0;
 }
 
-h3, h3 * {
+h3,
+h3 * {
   font-family: $font-stack;
   font-weight: 400;
   font-size: 2.4rem;
@@ -217,7 +218,8 @@ p.p-small {
   opacity: 0.8;
 }
 
-p.p-extra-small, p.p-extra-small a {
+p.p-extra-small,
+p.p-extra-small a {
   font-family: $font-stack;
   font-weight: 400;
   font-size: 1.2rem;
@@ -461,6 +463,10 @@ article.thumb {
   & > a {
     margin-bottom: 2rem;
   }
+}
+
+.twitter-container {
+  border: 1px solid red;
 }
 
 /* Icons */
@@ -917,7 +923,6 @@ p.venture-inactive {
 /* 1920px start */
 
 @media (min-width: 1920px) {
-
   html {
     overflow-x: hidden;
   }

@@ -74,11 +74,17 @@ const Post = ({ data, location }) => {
     themedPost = true
   }
   textColor = data.allWordpressPost.edges[0].node.acf.text_color || "#000000"
-  bgColor = data.allWordpressPost.edges[0].node.acf.background_color || "#ffffff"
+  bgColor =
+    data.allWordpressPost.edges[0].node.acf.background_color || "#ffffff"
 
-  const shareSelfUrl = location.origin + location.pathname 
-  const shareTwitterUrl = 'https://twitter.com/share?text=' + encodeURIComponent(parse(data.allWordpressPost.edges[0].node.title)) + '&url=' + shareSelfUrl
-  const shareFacebookUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + shareSelfUrl
+  const shareSelfUrl = location.origin + location.pathname
+  const shareTwitterUrl =
+    "https://twitter.com/share?text=" +
+    encodeURIComponent(parse(data.allWordpressPost.edges[0].node.title)) +
+    "&url=" +
+    shareSelfUrl
+  const shareFacebookUrl =
+    "https://www.facebook.com/sharer/sharer.php?u=" + shareSelfUrl
 
   return (
     <React.Fragment>
@@ -100,39 +106,42 @@ const Post = ({ data, location }) => {
             hexToRgbA(textColor, 0.1) +
             ` 1px solid;
       }
-      .post-header-bg-bg { background-color: ` + bgColor + `;}
+      .post-header-bg-bg { background-color: ` +
+            bgColor +
+            `;}
     }      
     `,
         }}
       />
 
-      { 
-        /* For themed post: check if given bg color is darken than text color,
+      {/* For themed post: check if given bg color is darken than text color,
         and apply styles accrodingly */
-        themedPost && (
-            hexToLightness(bgColor) < hexToLightness(textColor) ? (
-            <style
-              dangerouslySetInnerHTML={{
-                __html:
-                  `
-          .image-author { mix-blend-mode: lighten; background-color: ` + textColor + `;}
+      themedPost &&
+        (hexToLightness(bgColor) < hexToLightness(textColor) ? (
+          <style
+            dangerouslySetInnerHTML={{
+              __html:
+                `
+          .image-author { mix-blend-mode: lighten; background-color: ` +
+                textColor +
+                `;}
           .image-author img { mix-blend-mode: multiply; }
           `,
-              }}
-            />
-          ) : (
-            <style
-              dangerouslySetInnerHTML={{
-                __html:
-                  `
-          .image-author { mix-blend-mode: multiply; background-color: ` + textColor + `; }
+            }}
+          />
+        ) : (
+          <style
+            dangerouslySetInnerHTML={{
+              __html:
+                `
+          .image-author { mix-blend-mode: multiply; background-color: ` +
+                textColor +
+                `; }
           .image-author img { mix-blend-mode: lighten; filter: brightness(1.1); }
           `,
-              }}
-            />
-          )
-        )
-      }
+            }}
+          />
+        ))}
 
       <SEO
         title={parse(data.allWordpressPost.edges[0].node.title)}
@@ -162,8 +171,7 @@ const Post = ({ data, location }) => {
         itemType="http://schema.org/BlogPosting"
         className="widescreen"
       >
-        <div
-          className="post-header-bg-bg"></div>
+        <div className="post-header-bg-bg"></div>
         <div
           className="post-header-bg"
           style={{
